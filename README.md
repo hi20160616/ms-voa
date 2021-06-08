@@ -20,3 +20,11 @@ protoc -I "./" -I "../../../" \
     api/fetchnews/voa/v1/fetchnews.proto
 go mod tidy
 ```
+
+# Clone the project
+Just clone and run the command to replace all string in all files, that contains `dwnews`:
+```
+cd /path/to/your/folder
+sed -i 's/foo/bar/g' *
+```
+
