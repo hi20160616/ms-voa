@@ -15,160 +15,160 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// FetchBBCClient is the client API for FetchBBC service.
+// FetchVOAClient is the client API for FetchVOA service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type FetchBBCClient interface {
+type FetchVOAClient interface {
 	ListArticles(ctx context.Context, in *v1.ListArticlesRequest, opts ...grpc.CallOption) (*v1.ListArticlesResponse, error)
 	GetArticle(ctx context.Context, in *v1.GetArticleRequest, opts ...grpc.CallOption) (*v1.Article, error)
 	SearchArticles(ctx context.Context, in *v1.SearchArticlesRequest, opts ...grpc.CallOption) (*v1.SearchArticlesResponse, error)
 }
 
-type fetchBBCClient struct {
+type fetchVOAClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewFetchBBCClient(cc grpc.ClientConnInterface) FetchBBCClient {
-	return &fetchBBCClient{cc}
+func NewFetchVOAClient(cc grpc.ClientConnInterface) FetchVOAClient {
+	return &fetchVOAClient{cc}
 }
 
-func (c *fetchBBCClient) ListArticles(ctx context.Context, in *v1.ListArticlesRequest, opts ...grpc.CallOption) (*v1.ListArticlesResponse, error) {
+func (c *fetchVOAClient) ListArticles(ctx context.Context, in *v1.ListArticlesRequest, opts ...grpc.CallOption) (*v1.ListArticlesResponse, error) {
 	out := new(v1.ListArticlesResponse)
-	err := c.cc.Invoke(ctx, "/fetchnews.zaobao.v1.FetchBBC/ListArticles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/fetchnews.voa.v1.FetchVOA/ListArticles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *fetchBBCClient) GetArticle(ctx context.Context, in *v1.GetArticleRequest, opts ...grpc.CallOption) (*v1.Article, error) {
+func (c *fetchVOAClient) GetArticle(ctx context.Context, in *v1.GetArticleRequest, opts ...grpc.CallOption) (*v1.Article, error) {
 	out := new(v1.Article)
-	err := c.cc.Invoke(ctx, "/fetchnews.zaobao.v1.FetchBBC/GetArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/fetchnews.voa.v1.FetchVOA/GetArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *fetchBBCClient) SearchArticles(ctx context.Context, in *v1.SearchArticlesRequest, opts ...grpc.CallOption) (*v1.SearchArticlesResponse, error) {
+func (c *fetchVOAClient) SearchArticles(ctx context.Context, in *v1.SearchArticlesRequest, opts ...grpc.CallOption) (*v1.SearchArticlesResponse, error) {
 	out := new(v1.SearchArticlesResponse)
-	err := c.cc.Invoke(ctx, "/fetchnews.zaobao.v1.FetchBBC/SearchArticles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/fetchnews.voa.v1.FetchVOA/SearchArticles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FetchBBCServer is the server API for FetchBBC service.
-// All implementations must embed UnimplementedFetchBBCServer
+// FetchVOAServer is the server API for FetchVOA service.
+// All implementations must embed UnimplementedFetchVOAServer
 // for forward compatibility
-type FetchBBCServer interface {
+type FetchVOAServer interface {
 	ListArticles(context.Context, *v1.ListArticlesRequest) (*v1.ListArticlesResponse, error)
 	GetArticle(context.Context, *v1.GetArticleRequest) (*v1.Article, error)
 	SearchArticles(context.Context, *v1.SearchArticlesRequest) (*v1.SearchArticlesResponse, error)
-	mustEmbedUnimplementedFetchBBCServer()
+	mustEmbedUnimplementedFetchVOAServer()
 }
 
-// UnimplementedFetchBBCServer must be embedded to have forward compatible implementations.
-type UnimplementedFetchBBCServer struct {
+// UnimplementedFetchVOAServer must be embedded to have forward compatible implementations.
+type UnimplementedFetchVOAServer struct {
 }
 
-func (UnimplementedFetchBBCServer) ListArticles(context.Context, *v1.ListArticlesRequest) (*v1.ListArticlesResponse, error) {
+func (UnimplementedFetchVOAServer) ListArticles(context.Context, *v1.ListArticlesRequest) (*v1.ListArticlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListArticles not implemented")
 }
-func (UnimplementedFetchBBCServer) GetArticle(context.Context, *v1.GetArticleRequest) (*v1.Article, error) {
+func (UnimplementedFetchVOAServer) GetArticle(context.Context, *v1.GetArticleRequest) (*v1.Article, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetArticle not implemented")
 }
-func (UnimplementedFetchBBCServer) SearchArticles(context.Context, *v1.SearchArticlesRequest) (*v1.SearchArticlesResponse, error) {
+func (UnimplementedFetchVOAServer) SearchArticles(context.Context, *v1.SearchArticlesRequest) (*v1.SearchArticlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchArticles not implemented")
 }
-func (UnimplementedFetchBBCServer) mustEmbedUnimplementedFetchBBCServer() {}
+func (UnimplementedFetchVOAServer) mustEmbedUnimplementedFetchVOAServer() {}
 
-// UnsafeFetchBBCServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FetchBBCServer will
+// UnsafeFetchVOAServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to FetchVOAServer will
 // result in compilation errors.
-type UnsafeFetchBBCServer interface {
-	mustEmbedUnimplementedFetchBBCServer()
+type UnsafeFetchVOAServer interface {
+	mustEmbedUnimplementedFetchVOAServer()
 }
 
-func RegisterFetchBBCServer(s grpc.ServiceRegistrar, srv FetchBBCServer) {
-	s.RegisterService(&FetchBBC_ServiceDesc, srv)
+func RegisterFetchVOAServer(s grpc.ServiceRegistrar, srv FetchVOAServer) {
+	s.RegisterService(&FetchVOA_ServiceDesc, srv)
 }
 
-func _FetchBBC_ListArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FetchVOA_ListArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.ListArticlesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FetchBBCServer).ListArticles(ctx, in)
+		return srv.(FetchVOAServer).ListArticles(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetchnews.zaobao.v1.FetchBBC/ListArticles",
+		FullMethod: "/fetchnews.voa.v1.FetchVOA/ListArticles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FetchBBCServer).ListArticles(ctx, req.(*v1.ListArticlesRequest))
+		return srv.(FetchVOAServer).ListArticles(ctx, req.(*v1.ListArticlesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FetchBBC_GetArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FetchVOA_GetArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.GetArticleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FetchBBCServer).GetArticle(ctx, in)
+		return srv.(FetchVOAServer).GetArticle(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetchnews.zaobao.v1.FetchBBC/GetArticle",
+		FullMethod: "/fetchnews.voa.v1.FetchVOA/GetArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FetchBBCServer).GetArticle(ctx, req.(*v1.GetArticleRequest))
+		return srv.(FetchVOAServer).GetArticle(ctx, req.(*v1.GetArticleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FetchBBC_SearchArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FetchVOA_SearchArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.SearchArticlesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FetchBBCServer).SearchArticles(ctx, in)
+		return srv.(FetchVOAServer).SearchArticles(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetchnews.zaobao.v1.FetchBBC/SearchArticles",
+		FullMethod: "/fetchnews.voa.v1.FetchVOA/SearchArticles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FetchBBCServer).SearchArticles(ctx, req.(*v1.SearchArticlesRequest))
+		return srv.(FetchVOAServer).SearchArticles(ctx, req.(*v1.SearchArticlesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FetchBBC_ServiceDesc is the grpc.ServiceDesc for FetchBBC service.
+// FetchVOA_ServiceDesc is the grpc.ServiceDesc for FetchVOA service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FetchBBC_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "fetchnews.zaobao.v1.FetchBBC",
-	HandlerType: (*FetchBBCServer)(nil),
+var FetchVOA_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "fetchnews.voa.v1.FetchVOA",
+	HandlerType: (*FetchVOAServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListArticles",
-			Handler:    _FetchBBC_ListArticles_Handler,
+			Handler:    _FetchVOA_ListArticles_Handler,
 		},
 		{
 			MethodName: "GetArticle",
-			Handler:    _FetchBBC_GetArticle_Handler,
+			Handler:    _FetchVOA_GetArticle_Handler,
 		},
 		{
 			MethodName: "SearchArticles",
-			Handler:    _FetchBBC_SearchArticles_Handler,
+			Handler:    _FetchVOA_SearchArticles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/fetchnews/zaobao/v1/fetchnews.proto",
+	Metadata: "api/fetchnews/voa/v1/fetchnews.proto",
 }

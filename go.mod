@@ -1,4 +1,4 @@
-module github.com/hi20160616/ms-zaobao
+module github.com/hi20160616/ms-voa
 
 go 1.16
 
