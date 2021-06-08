@@ -22,11 +22,10 @@ func fetchLinks() ([]string, error) {
 		}
 		rt = append(rt, links...)
 	}
-	newsWorld := linksFilter(rt, `.*?/news/world/.*`)
-	newsChina := linksFilter(rt, `.*?/news/china/.*`)
-	realtimeWorld := linksFilter(rt, `.*?/realtime/world/.*`)
-	realtimeChina := linksFilter(rt, `.*?/realtime/china/.*`)
-	rt = append(append(append(newsWorld, newsChina...), realtimeWorld...), realtimeChina...)
+	ls1 := linksFilter(rt, `.*?/a/\d*?.html`)
+	ls2 := linksFilter(rt, `.*?/a/.*-.*.html`)
+	rt = append(ls1, ls2...)
+	rt = kickOutLinksMatchPath(rt, "voaweishi")
 	return rt, nil
 }
 
@@ -62,20 +61,6 @@ func getLinks(rawurl string) ([]string, error) {
 	}
 }
 
-// kickOutLinksMatchPath will kick out the links match the path,
-func kickOutLinksMatchPath(links *[]string, path string) {
-	tmp := []string{}
-	// path = "/" + url.QueryEscape(path) + "/"
-	// path = url.QueryEscape(path)
-	for _, link := range *links {
-		if !strings.Contains(link, path) {
-			tmp = append(tmp, link)
-		}
-	}
-	*links = tmp
-}
-
-// TODO: use point to impletement linksFilter
 // linksFilter is support for SetLinks method
 func linksFilter(links []string, regex string) []string {
 	flinks := []string{}
@@ -83,4 +68,15 @@ func linksFilter(links []string, regex string) []string {
 	s := strings.Join(links, "\n")
 	flinks = re.FindAllString(s, -1)
 	return flinks
+}
+
+// kickOutLinksMatchPath will kick out the links match the path,
+func kickOutLinksMatchPath(links []string, pattern string) []string {
+	tmp := []string{}
+	for _, link := range links {
+		if !strings.Contains(link, pattern) {
+			tmp = append(tmp, link)
+		}
+	}
+	return tmp
 }

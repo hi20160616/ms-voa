@@ -6,7 +6,7 @@ import (
 )
 
 func TestLoad(t *testing.T) {
-	if err := get(); err != nil {
+	if err := load(); err != nil {
 		t.Error(err)
 	}
 	fmt.Println(Data)

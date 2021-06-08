@@ -16,8 +16,14 @@ func TestFetchArticle(t *testing.T) {
 		url string
 		err error
 	}{
-		{"https://www.voa.com/realtime/world/story20210602-1151196", ErrTimeOverDays},
-		{"https://www.voa.com/realtime/world/story20210607-1153241", nil},
+		{
+			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			ErrTimeOverDays,
+		},
+		{
+			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			nil,
+		},
 	}
 	for _, tc := range tests {
 		a := NewArticle()
@@ -39,8 +45,14 @@ func TestFetchTitle(t *testing.T) {
 		url   string
 		title string
 	}{
-		{"https://www.voa.com/realtime/world/story20210602-1151196", "马国男子腰缠巨蟒骑摩托车送往放生引热议"},
-		{"https://www.voa.com/realtime/world/story20210607-1153241", "以色列将于14日前投票批准新政府"},
+		{
+			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			"塑造“可信、可爱、可敬”中国？ 布林肯：北京可能意识到战狼外交起反效果",
+		},
+		{
+			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			"特朗普关闭博客 其网络平台几乎全部消失",
+		},
 	}
 	for _, tc := range tests {
 		a := NewArticle()
@@ -76,12 +88,12 @@ func TestFetchUpdateTime(t *testing.T) {
 		want string
 	}{
 		{
-			"https://www.voa.com/realtime/world/story20210602-1151196",
-			"2021-06-02 15:44:33 +0800 UTC",
+			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			"2021-06-08 10:55:33 +0800 UTC",
 		},
 		{
-			"https://www.voa.com/realtime/world/story20210607-1153241",
-			"2021-06-07 21:38:53 +0800 UTC",
+			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			"2021-06-03 08:50:11 +0800 UTC",
 		},
 	}
 	var err error
@@ -119,12 +131,12 @@ func TestFetchContent(t *testing.T) {
 		want string
 	}{
 		{
-			"https://www.voa.com/realtime/world/story20210602-1151196",
-			"2021-06-02 15:44:33 +0800 UTC",
+			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			"2021-06-08 10:55:33 +0800 UTC",
 		},
 		{
-			"https://www.voa.com/realtime/world/story20210607-1153241",
-			"2021-06-07 21:38:53 +0800 UTC",
+			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			"2021-06-03 08:50:11 +0800 UTC",
 		},
 	}
 	var err error

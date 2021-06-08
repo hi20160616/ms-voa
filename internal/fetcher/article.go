@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/url"
-	"regexp"
 	"strings"
 	"time"
 
@@ -154,12 +153,20 @@ func (a *Article) fetchTitle() (string, error) {
 }
 
 func (a *Article) fetchUpdateTime() (*timestamppb.Timestamp, error) {
-	if a.raw == nil {
-		return nil, errors.Errorf("[%s] fetchUpdateTime: raw is nil: %s", configs.Data.MS.Title, a.U.String())
+	if a.doc == nil {
+		return nil, errors.Errorf("[%s] fetchUpdateTime: doc is nil: %s", configs.Data.MS.Title, a.U.String())
 	}
-	re := regexp.MustCompile(`"datePublished": "(.*?)",`)
-	rs := re.FindAllSubmatch(a.raw, -1)[0]
-	t, err := time.Parse(time.RFC3339, string(rs[1]))
+	nodes := exhtml.ElementsByTag(a.doc, "time")
+	d := []string{}
+	if nodes == nil {
+		return nil, fmt.Errorf("[%s] there is no element <time>", configs.Data.MS.Title)
+	}
+	for _, a := range nodes[0].Attr {
+		if a.Key == "datetime" {
+			d = append(d, a.Val)
+		}
+	}
+	t, err := time.Parse(time.RFC3339, d[0])
 	if err != nil {
 		return nil, err
 	}
@@ -200,33 +207,20 @@ func (a *Article) fetchContent() (string, error) {
 	}
 	body := ""
 	// Fetch content nodes
-	nodes := exhtml.ElementsByTagAndId(a.doc, "article", "article-body")
-	if len(nodes) == 0 {
-		nodes = exhtml.ElementsByTagAndClass(a.doc, "div", "article-content-rawhtml")
-	}
-	if len(nodes) == 0 {
-		nodes = exhtml.ElementsByTagAndClass(a.doc, "div", "article-content-container")
-	}
-	if len(nodes) == 0 {
-		return "", errors.Errorf("[%s] no content extract from %s", configs.Data.MS.Title, a.U.String())
+	nodes := exhtml.ElementsByTagAndClass(a.doc, "div", "wsw")
+	if nodes == nil {
+		return "", errors.New(`There is no element match '<div class="wsw">'`)
 	}
 	plist := exhtml.ElementsByTag(nodes[0], "p")
 	for _, v := range plist {
 		if v.FirstChild == nil {
 			continue
-		} else if v.FirstChild.FirstChild != nil &&
-			v.FirstChild.Data == "strong" {
-			a := exhtml.ElementsByTag(v, "span")
-			for _, aa := range a {
-				body += aa.FirstChild.Data
-			}
-			body += "  \n"
-		} else {
-			body += v.FirstChild.Data + "  \n"
 		}
+		body += v.FirstChild.Data + "  \n"
 	}
+	body = strings.ReplaceAll(body, "strong  \n", "")
 	body = strings.ReplaceAll(body, "span  \n", "")
-
+	body = strings.ReplaceAll(body, "br  \n", "")
 	return body, nil
 }
 

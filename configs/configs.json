@@ -1,15 +1,13 @@
 {
   "dbpath":"db",
   "microservice":{
-    "title":"zaobao",
-    "domain":"www.zaobao.com",
+    "title":"voa",
+    "domain":"www.voachinese.com",
     "url":[
-      "https://www.zaobao.com/realtime/world",
-      "https://www.zaobao.com/news/world",
-      "https://www.zaobao.com/realtime/china",
-      "https://www.zaobao.com/news/china"
+      "https://www.voachinese.com",
+      "https://www.voachinese.com/z/1739"
     ],
-    "addr":":10002",
+    "addr":":10003",
     "timeout":"1s",
     "heartbeat":"5m"
   }

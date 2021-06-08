@@ -33,7 +33,7 @@ func setRootPath() error {
 	return nil
 }
 
-func get() error {
+func load() error {
 	f, err := os.ReadFile(filepath.Join(Data.RootPath, "configs/configs.json"))
 	if err != nil {
 		return err
@@ -44,7 +44,7 @@ func init() {
 	if err := setRootPath(); err != nil {
 		log.Printf("config init error: %v", err)
 	}
-	if err := get(); err != nil {
+	if err := load(); err != nil {
 		log.Printf("config get() error: %v", err)
 	}
 }
@@ -52,5 +52,5 @@ func init() {
 // Reset is for test to reset RootPath and invoke get()
 func Reset(pwd string) error {
 	Data.RootPath = pwd
-	return get()
+	return load()
 }
