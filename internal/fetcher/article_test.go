@@ -17,11 +17,11 @@ func TestFetchArticle(t *testing.T) {
 		err error
 	}{
 		{
-			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			"https://www.voachinese.com/a/US-China-cyber-war-20210627/5944602.html",
 			ErrTimeOverDays,
 		},
 		{
-			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			"https://www.voachinese.com/a/Washington-Post-Chinese-missile-silos-icbm-20210630/5948766.html",
 			nil,
 		},
 	}
@@ -131,11 +131,11 @@ func TestFetchContent(t *testing.T) {
 		want string
 	}{
 		{
-			"https://www.voachinese.com/a/us-house-hearing-blinken-china-alienating-world-20210607/5920478.html",
+			"https://www.voachinese.com/a/Washington-Post-Chinese-missile-silos-icbm-20210630/5948766.html",
 			"2021-06-08 10:55:33 +0800 UTC",
 		},
 		{
-			"https://www.voachinese.com/a/Trump-shuts-down-blog-nearly-erasing-online-presence/5914287.html",
+			"https://www.voachinese.com/a/hong-kong-one-year-anniversary-national-security-law-20210630/5947808.html",
 			"2021-06-03 08:50:11 +0800 UTC",
 		},
 	}

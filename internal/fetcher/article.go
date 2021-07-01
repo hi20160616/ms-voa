@@ -1,8 +1,10 @@
 package fetcher
 
 import (
+	"bytes"
 	"crypto/md5"
 	"fmt"
+	"io"
 	"log"
 	"net/url"
 	"strings"
@@ -182,6 +184,13 @@ func shanghai(t time.Time) time.Time {
 }
 
 func (a *Article) fetchContent() (string, error) {
+	renderNode := func(n *html.Node) string {
+		var buf bytes.Buffer
+		w := io.Writer(&buf)
+		html.Render(w, n)
+		return buf.String()
+	}
+
 	if a.doc == nil {
 		return "", errors.Errorf("[%s] fetchContent: doc is nil: %s", configs.Data.MS.Title, a.U.String())
 	}
@@ -193,14 +202,10 @@ func (a *Article) fetchContent() (string, error) {
 	}
 	plist := exhtml.ElementsByTag(nodes[0], "p")
 	for _, v := range plist {
-		if v.FirstChild == nil {
-			continue
-		}
-		body += v.FirstChild.Data + "  \n"
+		body += renderNode(v) + "  \n"
 	}
-	body = strings.ReplaceAll(body, "strong  \n", "")
-	body = strings.ReplaceAll(body, "span  \n", "")
-	body = strings.ReplaceAll(body, "br  \n", "")
+	body = strings.ReplaceAll(body, "<p>", "")
+	body = strings.ReplaceAll(body, "</p>", "")
 	return body, nil
 }
 
