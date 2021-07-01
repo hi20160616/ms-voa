@@ -206,6 +206,7 @@ func (a *Article) fetchContent() (string, error) {
 	}
 	body = strings.ReplaceAll(body, "<p>", "")
 	body = strings.ReplaceAll(body, "</p>", "")
+	body = strings.ReplaceAll(body, `<p class="ta-c"><span class="ico ico-clock"></span>没有媒体可用资源`, "")
 	return body, nil
 }
 

@@ -131,7 +131,7 @@ func TestFetchContent(t *testing.T) {
 		want string
 	}{
 		{
-			"https://www.voachinese.com/a/Washington-Post-Chinese-missile-silos-icbm-20210630/5948766.html",
+			"https://www.voachinese.com/a/ccp-100-years---scholars-on-mao-xi-and-ccp-future-20210630/5947952.html",
 			"2021-06-08 10:55:33 +0800 UTC",
 		},
 		{
